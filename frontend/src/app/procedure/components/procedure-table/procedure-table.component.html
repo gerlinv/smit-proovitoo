@@ -1,0 +1,28 @@
+<div class="procedure-container">
+  <div class="header-container">
+      <h1>Menetlused</h1>
+      <button class="btn btn-primary" type="button" (click)="goToProcedureForm()">Loo menetlus</button>
+  </div>
+  <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Menetluse ID</th>
+          <th scope="col">Isikunimi</th>
+          <th scope="col">Isikukood</th>
+          <th scope="col">E-posti aadress</th>
+          <th scope="col">Menetluse põhjus</th>
+          <th scope="col">E-kiri saadetud</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="procedures">
+        <tr *ngFor="let procedure of procedures">
+          <td>{{procedure.id}}</td>
+          <td>{{procedure.person.name}}</td>
+          <td>{{procedure.person.identityCode}}</td>
+          <td>{{procedure.person.email}}</td>
+          <td>{{procedure.reason}}</td>
+          <td>{{procedure.emailSent ? 'Jah' : 'Ei'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

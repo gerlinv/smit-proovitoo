@@ -1,0 +1,72 @@
+services:
+
+  database:
+    container_name: database
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    image: 'postgres:latest'
+    networks:
+      - procedure-network
+    ports:
+      - '5432:5432'
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: backend
+    environment:
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/${POSTGRES_DB}
+      - SPRING_RABBITMQ_HOST=${SPRING_RABBITMQ_HOST}
+    networks:
+      - procedure-network
+    depends_on:
+      - database
+      - rabbitmq
+    ports:
+      - '8080:8080'
+
+  email:
+    build: ./email-service
+    container_name: email-service
+    environment:
+      - SPRING_RABBITMQ_HOST=${SPRING_RABBITMQ_HOST}
+    networks:
+      - procedure-network
+    depends_on:
+      - backend
+      - rabbitmq
+    ports:
+      - '8090:8080'
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:management
+    networks:
+      - procedure-network
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+  
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    networks:
+      - procedure-network
+    depends_on:
+      - backend
+    ports:
+      - '4200:4200'
+
+networks:
+  procedure-network:
+
+volumes:
+  db-data:
+  node_volumes:
+  

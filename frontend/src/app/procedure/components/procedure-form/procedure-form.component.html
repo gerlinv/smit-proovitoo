@@ -1,0 +1,89 @@
+<app-modal [modalTitle]="modalTitle" [modalMessage]="modalMessage"></app-modal>
+
+<div class="form-container">
+  <div class="procedure-container">
+    <div class="header-container">
+      <h2>Uus menetlus</h2>
+    </div>
+    <form [formGroup]="procedureForm" (ngSubmit)="onSubmit()">
+      <div class="form-group row mb-3">
+        <label class="col-sm-3 col-form-label col-form-label-sm" for="name" >Isikunimi</label>
+        <div class="col-sm-9">
+          <input class="form-control" id="name" name="name"
+                 type="text" [maxlength]="255"
+                 required [(ngModel)]="procedure.name"
+                 placeholder="Isikunimi"
+                 [formControl]="procedureForm.controls.name"
+                 [ngClass]="{
+                  'is-valid': procedureForm.controls.name.valid,
+                  'is-invalid': procedureForm.controls.name.invalid && (procedureForm.controls.name.touched || procedureForm.controls.name.dirty)
+                  }">
+          <div *ngIf="procedureForm.controls.name.invalid && (procedureForm.controls.name.touched || procedureForm.controls.name.dirty)" class="invalid-feedback">
+            <div *ngIf="procedureForm.controls.name.errors?.['required']">Isikunimi on kohustuslik</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row mb-3">
+        <label class="col-sm-3 col-form-label col-form-label-sm" for="identityCode" >Isikukood</label>
+        <div class="col-sm-9">
+          <input class="form-control" id="identityCode" name="identityCode"
+                 type="text"[maxLength]="11" 
+                 required [(ngModel)]="procedure.identityCode"
+                 placeholder="Isikukood"
+                 [formControl]="procedureForm.controls.identityCode"
+                 [ngClass]="{
+                  'is-valid': procedureForm.controls.identityCode.valid,
+                  'is-invalid': procedureForm.controls.identityCode.invalid && (procedureForm.controls.identityCode.touched || procedureForm.controls.identityCode.dirty)
+                  }">
+          <div *ngIf="procedureForm.controls.identityCode.invalid && (procedureForm.controls.identityCode.touched || procedureForm.controls.identityCode.dirty)" class="invalid-feedback">
+            <div *ngIf="procedureForm.controls.identityCode.errors?.['required']">Isikukood on kohustuslik</div>
+            <div *ngIf="procedureForm.controls.identityCode.errors?.['minlength'] || procedureForm.controls.identityCode.errors?.['maxLength']">
+              Isikukood peab 11 tähemärki pikk
+            </div>
+            <div *ngIf="procedureForm.controls.identityCode.errors?.['pattern']">Isikukood tohib sisaldada ainult numbreid</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row mb-3">
+        <label class="col-sm-3 col-form-label col-form-label-sm" for="email" >E-posti aadress</label>
+        <div class="col-sm-9">
+          <input class="form-control" id="email" name="email"
+                 type="email" [maxlength]="255"
+                 required [(ngModel)]="procedure.email"
+                 placeholder="E-posti aadress"
+                 [formControl]="procedureForm.controls.email"
+                 [ngClass]="{
+                  'is-valid': procedureForm.controls.email.valid,
+                  'is-invalid': procedureForm.controls.email.invalid && (procedureForm.controls.email.touched || procedureForm.controls.email.dirty)
+                  }">
+          <div *ngIf="procedureForm.controls.email.invalid && (procedureForm.controls.email.touched || procedureForm.controls.email.dirty)" class="invalid-feedback">
+            <div *ngIf="procedureForm.controls.email.errors?.['required']">E-posti aadress on kohustuslik</div>
+            <div *ngIf="procedureForm.controls.email.errors?.['email']">Emaili formaat peab olema korrektne</div>
+            <div *ngIf="procedureForm.controls.email.errors?.['pattern']">Emaili formaat peab olema korrektne</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row mb-3">
+        <label class="col-sm-3 col-form-label col-form-label-sm" for="reason">Menetluse põhjus</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" id="reason" name="reason" 
+                    type="text" [maxlength]="255"
+                    required [(ngModel)]="procedure.reason" 
+                    placeholder="Menetluse alustamise põhjus"
+                    [formControl]="procedureForm.controls.reason"
+                    [ngClass]="{
+                      'is-valid': procedureForm.controls.reason.valid,
+                      'is-invalid': procedureForm.controls.reason.invalid && (procedureForm.controls.reason.touched || procedureForm.controls.reason.dirty)
+                    }"></textarea>
+          <div *ngIf="procedureForm.controls.reason.invalid && (procedureForm.controls.reason.touched || procedureForm.controls.reason.dirty)" class="invalid-feedback">
+            <div *ngIf="procedureForm.controls.reason.errors?.['required']">Menetluse põhjus on kohustuslik</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-buttons">
+        <button class="btn btn-success form-btn" type="submit" [disabled]="!procedureForm.valid">Salvesta</button>
+        <button class="btn btn-danger form-btn" (click)="goBack()">Tagasi</button>
+      </div>
+    </form>
+  </div>
+</div>

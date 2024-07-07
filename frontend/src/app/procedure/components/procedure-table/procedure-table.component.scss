@@ -1,0 +1,20 @@
+.procedure-container {
+  overflow-x: auto;
+}
+  
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.table th, .table td {
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+
+.table td {
+  max-width: 200px; 
+}
