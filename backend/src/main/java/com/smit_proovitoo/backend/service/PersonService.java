@@ -19,7 +19,7 @@ public class PersonService {
     /**
      * Retrieves an existing person by identity code.
      *
-     * @param identityCode the identity code of the person.
+     * @param identityCode, the identity code of the person.
      * @return the person if found, null otherwise.
      */
     public Person getExistingPerson(Long identityCode) {
@@ -29,7 +29,7 @@ public class PersonService {
     /**
      * Saves a person entity into the database.
      *
-     * @param person the person object to be saved.
+     * @param person, the person object to be saved.
      * @return the saved person object.
      */
     public Person savePerson(Person person) {

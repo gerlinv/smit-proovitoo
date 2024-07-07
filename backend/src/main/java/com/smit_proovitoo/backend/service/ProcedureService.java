@@ -48,7 +48,7 @@ public class ProcedureService {
     /**
      * Creates a new procedure and sends and email.
      *
-     * @param procedureDto the data transfer object containing procedure details.
+     * @param procedureDto, the data transfer object containing procedure details.
      * @return the created procedure.
      */
     public Procedure createProcedure(ProcedureDto procedureDto) {
@@ -57,6 +57,7 @@ public class ProcedureService {
         newProcedure.setEmailSent(false);
         newProcedure.setReason(procedureDto.getReason());
 
+        // Additionally, should show on the frontend side that person with existing identity code already exists
         Person person = personService.getExistingPerson(procedureDto.getIdentityCode());
         if (person == null) {
             person = new Person();
@@ -78,11 +79,11 @@ public class ProcedureService {
     /**
      * Sends an email for the given procedure ID.
      *
-     * @param procedureId the ID of the procedure.
+     * @param procedureId, the ID of the procedure.
      */
     public void sendEmail(Long procedureId) {
         String routingKey = RabbitMQQueue.PROCEDURE_RECEIVE_QUEUE + routingKeySuffix;
-        logger.info(String.format("Sending email to queue with procedure id %s", procedureId));
+        logger.info(String.format("Sending email to queue with procedure id %s.", procedureId));
         rabbitTemplate.convertAndSend(exchange, routingKey, procedureId);
     }
 

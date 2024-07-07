@@ -38,7 +38,7 @@ public class ProcedureController {
     /**
      * Endpoint to create a new procedure.
      *
-     * @param procedureDto the data transfer object containing procedure details.
+     * @param procedureDto, the data transfer object containing procedure details.
      * @return a ResponseEntity containing the created procedure or an error message.
      */
     @PostMapping

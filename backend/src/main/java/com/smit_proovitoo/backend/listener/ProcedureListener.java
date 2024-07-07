@@ -24,7 +24,7 @@ public class ProcedureListener {
     /**
      * Handles the receipt of a procedure email.
      *
-     * @param id the ID of the procedure as a string.
+     * @param id, the ID of the procedure as a string.
     */
     @RabbitListener(queues = RabbitMQQueue.PROCEDURE_RECEIVE_QUEUE)
     public void receiveEmailResponse(String id) {
@@ -35,9 +35,9 @@ public class ProcedureListener {
             Procedure procedure = optionalProcedure.get();
             procedure.setEmailSent(true);
             procedureRepository.save(procedure);
-            logger.info(String.format("Email with procedure id %s has been sent and received", id));
+            logger.info(String.format("Email with procedure id %s has been sent and received.", id));
         } else {
-            logger.error(String.format("Encountered an error while receiving a message from procedure with id %s", id));
+            logger.error(String.format("Encountered an error while receiving a message from procedure with id %s.", id));
         }
     }
 

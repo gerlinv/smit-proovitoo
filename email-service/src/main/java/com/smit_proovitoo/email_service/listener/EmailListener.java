@@ -20,7 +20,7 @@ public class EmailListener {
     /**
      * Handles messages from the procedure email send queue.
      *
-     * @param the ID of the procedure.
+     * @param id, the ID of the procedure.
      */
     @RabbitListener(queues = RabbitMQQueue.PROCEDURE_EMAIL_SEND_QUEUE)
     public void receiveProcedureStartMessage(Long procedureId) {
